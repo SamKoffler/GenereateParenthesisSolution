@@ -1,0 +1,24 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = ["("]
+        #bank = [[open bank, closed bank]]
+        bank = [[n-1,n]]
+        while len(res[0])!=n*2:
+            new_res = []
+            new_bank = []
+            for i in range(len(res)):
+                if bank[i][0] == 0:
+                    new_res.append(res[i]+")")
+                    new_bank.append([bank[i][0], bank[i][1]-1])
+                elif bank[i][0]==bank[i][1]:
+                    new_res.append(res[i]+"(")
+                    new_bank.append([bank[i][0]-1, bank[i][1]])
+                else:
+                    new_res.append(res[i]+"(")
+                    new_bank.append([bank[i][0]-1, bank[i][1]])
+                    new_res.append(res[i]+")")
+                    new_bank.append([bank[i][0], bank[i][1]-1])
+            res = new_res
+            bank = new_bank
+            #print(res)
+        return res
